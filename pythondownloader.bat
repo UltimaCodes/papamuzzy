@@ -9,7 +9,7 @@ if %errorlevel% == 0 (
     set version=!version:~0,3!
     if !version! geq 3.6 (
       echo Python 3 is already installed.
-      goto :download_scripts
+      goto :install_modules
     )
     echo An incompatible version of Python is installed.
   )
@@ -22,10 +22,34 @@ python-3.9.6-amd64.exe /quiet InstallAllUsers=1 PrependPath=1
 REM Check if the installation was successful
 python --version >nul 2>&1
 if %errorlevel% neq 0 (
-  echo Failed install Python.
+  echo Failed to install Python.
   goto :end
 )
 echo Python 3 has been installed successfully.
+
+REM Install curl and PowerShell if not installed
+echo Checking for curl...
+curl --version >nul 2>&1
+if %errorlevel% neq 0 (
+  echo Installing curl...
+  choco install curl -y
+)
+
+echo Checking for PowerShell...
+powershell -version >nul 2>&1
+if %errorlevel% neq 0 (
+  echo Installing PowerShell...
+  choco install PowerShell -y
+)
+
+:install_modules
+echo Installing required modules...
+python -m pip install winshell shutil requests psutil
+if %errorlevel% neq 0 (
+  echo Failed to install some modules.
+  goto :end
+)
+echo All required modules have been installed successfully.
 
 :download_scripts
 echo Downloading Papamuzzy downloader script...
