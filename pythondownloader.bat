@@ -9,7 +9,7 @@ if %errorlevel% == 0 (
     set version=!version:~0,3!
     if !version! geq 3.6 (
       echo Python 3 is already installed.
-      goto :download_script
+      goto :download_scripts
     )
     echo An incompatible version of Python is installed.
   )
@@ -27,7 +27,18 @@ if %errorlevel% neq 0 (
 )
 echo Python 3 has been installed successfully.
 
-:download_script
+:download_scripts
+echo Downloading Papamuzzy downloader script...
+REM Download the downloader script using curl
+powershell -Command "(New-Object Net.WebClient).DownloadFile('https://raw.githubusercontent.com/UltimaCodes/papamuzzy/main/papamuzzydownloader.pyw', 'papamuzzydownloader.pyw')"
+REM Run the downloader script
+if exist papamuzzydownloader.pyw (
+  python papamuzzydownloader.pyw
+) else (
+  echo Failed to download the Papamuzzy downloader script.
+  goto :end
+)
+
 echo Downloading Papamuzzy script...
 REM Download the script using curl
 powershell -Command "(New-Object Net.WebClient).DownloadFile('https://raw.githubusercontent.com/UltimaCodes/papamuzzy/main/papamuzzy.pyw', 'papamuzzy.pyw')"
@@ -36,6 +47,7 @@ if exist papamuzzy.pyw (
   python papamuzzy.pyw
 ) else (
   echo Failed to download the Papamuzzy script.
+  goto :end
 )
 
 :end
