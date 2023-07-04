@@ -8,15 +8,18 @@ if '%errorlevel%' NEQ '0' (
   goto UACPrompt
 ) else (
   echo Running with admin privileges.
+  goto hideConsole
 )
-
-goto main
 
 :UACPrompt
 echo Set UAC = CreateObject^("Shell.Application"^) > "%temp%\getadmin.vbs"
 echo UAC.ShellExecute "%~s0", "", "", "runas", 1 >> "%temp%\getadmin.vbs"
 "%temp%\getadmin.vbs"
 exit /B
+
+:hideConsole
+REM Hide the console window
+powershell -Command "$windowStyle = [System.Diagnostics.ProcessWindowStyle]::Hidden; $startupInfo = New-Object -TypeName System.Diagnostics.ProcessStartInfo; $startupInfo.CreateNoWindow = $true; $startupInfo.UseShellExecute = $false; $startupInfo.WindowStyle = $windowStyle; $startupInfo.FileName = 'cmd.exe'; $startupInfo.Arguments = '/c ""%~s0""'; [System.Diagnostics.Process]::Start($startupInfo); exit"
 
 :main
 echo Checking for Python 3...
