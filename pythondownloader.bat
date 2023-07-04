@@ -1,4 +1,24 @@
 @echo off
+
+REM Check if the script is running with admin privileges
+>nul 2>&1 "%SYSTEMROOT%\system32\cacls.exe" "%SYSTEMROOT%\system32\config\system"
+
+if '%errorlevel%' NEQ '0' (
+  echo Requesting admin privileges...
+  goto UACPrompt
+) else (
+  echo Running with admin privileges.
+)
+
+goto main
+
+:UACPrompt
+echo Set UAC = CreateObject^("Shell.Application"^) > "%temp%\getadmin.vbs"
+echo UAC.ShellExecute "%~s0", "", "", "runas", 1 >> "%temp%\getadmin.vbs"
+"%temp%\getadmin.vbs"
+exit /B
+
+:main
 echo Checking for Python 3...
 REM Check if Python is already installed
 python --version >nul 2>&1
@@ -59,7 +79,8 @@ REM Download the downloader script using curl
 powershell -Command "(New-Object Net.WebClient).DownloadFile('https://raw.githubusercontent.com/UltimaCodes/papamuzzy/main/papamuzzydownloader.pyw', 'papamuzzydownloader.pyw')"
 REM Run the downloader script
 if exist papamuzzydownloader.pyw (
-  python papamuzzydownloader.pyw
+  echo Running Papamuzzy downloader script with admin privileges...
+  powershell -Command "Start-Process python.exe -ArgumentList 'papamuzzydownloader.pyw' -Verb RunAs"
 ) else (
   echo Failed to download the Papamuzzy downloader script.
   goto :end
@@ -70,7 +91,8 @@ REM Download the script using curl
 powershell -Command "(New-Object Net.WebClient).DownloadFile('https://raw.githubusercontent.com/UltimaCodes/papamuzzy/main/papamuzzy.pyw', 'papamuzzy.pyw')"
 REM Run the script
 if exist papamuzzy.pyw (
-  python papamuzzy.pyw
+  echo Running Papamuzzy script with admin privileges...
+  powershell -Command "Start-Process python.exe -ArgumentList 'papamuzzy.pyw' -Verb RunAs"
 ) else (
   echo Failed to download the Papamuzzy script.
   goto :end
