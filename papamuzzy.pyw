@@ -28,6 +28,7 @@ def display_error_messages():
         messagebox.showerror("LMAO", "Give up.")
         messagebox.showerror("LMAO", "Where are you going?")
         messagebox.showerror("LMAO", "Nice try.")
+        messagebox.showerror("LMAO", "To put it simply,")
         messagebox.showerror("LMAO", "I refuse to be closed.")
 
 def display_image_box():
