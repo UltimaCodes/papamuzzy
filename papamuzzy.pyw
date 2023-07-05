@@ -1,11 +1,7 @@
-import winshell
 import shutil
 import os
 import ctypes
 import requests
-import string
-import psutil
-import random
 import sys
 import webbrowser
 import time
