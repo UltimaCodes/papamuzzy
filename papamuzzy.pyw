@@ -13,7 +13,7 @@ import ctypes
 def custom_messagebox(text, title):
     root = tk.Tk()
     root.withdraw()
-    messagebox.showinfo(title, text)
+    messagebox.showerror("title", "text")
 
 def copy_to_startup():
     # Get the path to the user's startup folder
