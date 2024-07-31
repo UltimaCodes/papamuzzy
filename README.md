@@ -3,3 +3,4 @@ Disclaimer: This should be very obvious but this is a virus and its very dangero
 
 How to be dumb:
 Run papamuzzy.exe with admin perms 
+Password: SuckMyMuzzy1942 (case sensitive)
