@@ -85,7 +85,7 @@ if __name__ == "__main__":
     confirmation = input("This is malware that will irreversibly destroy your PC, Proceed? (Y/N)")
     if confirmation == 'Y':
         password == input("Enter the password: ")
-        if password == 'SuckMyMuzzy1942':
+        if password == 'ThoseWhoKnows':
             print("Correct. ")
         else:
             print("Incorrect password, exiting...")
